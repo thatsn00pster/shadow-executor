@@ -1,0 +1,24 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+
+local Window = Library.CreateLib("ShadowExecutor", "DarkTheme")
+
+local Tab = Window:NewTab("Main")
+
+local MainSection = Tab:NewSection("Character")
+
+MainSection:NewButton("Infinite Jump", "Lets You Jump Infinitely", function()
+loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Infinite%20Jump.txt"))()
+end)
+
+MainSection:NewSlider("WalkSpeed", "Changes How Fast You Walk", 250, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+MainSection:NewSlider("JumpPower", "Changes How High You Can Jump", 250, 15, function(s) -- 250 (MaxValue) | 0 (MinValue)
+local JUMP_POWER = s -- Change this to your desired JumpPower
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+humanoid.JumpPower = JUMP_POWER
+end)
