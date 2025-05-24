@@ -31,5 +31,20 @@ humanoid.JumpPower = JUMP_POWER
 end)
 
 Section:NewButton("N word with numbers", "N word using numbers", function()
-game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("n!gg3r", "All")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Check for chat event system
+local chatEvents = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
+if chatEvents and chatEvents:FindFirstChild("SayMessageRequest") then
+    -- Send chat message
+    chatEvents.SayMessageRequest:FireServer("N!GG3R", "All")
+else
+    -- Fallback alert
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "Error";
+        Text = "Game not supported for this button.";
+        Duration = 5;
+    })
+end
+
 end)
