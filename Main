@@ -4,10 +4,17 @@ local Window = Library.CreateLib("ShadowExecutor", "DarkTheme")
 
 local Tab = Window:NewTab("Main")
 
+
 local MainSection = Tab:NewSection("Character")
+local Section = Tab:NewSection("ChatBypass")
 
 MainSection:NewButton("Infinite Jump", "Lets You Jump Infinitely", function()
-loadstring(game:HttpGet("https://cdn.wearedevs.net/scripts/Infinite%20Jump.txt"))()
+local InfiniteJumpEnabled = true
+game:GetService("UserInputService").JumpRequest:connect(function()
+	if InfiniteJumpEnabled then
+		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
+	end
+end)
 end)
 
 MainSection:NewSlider("WalkSpeed", "Changes How Fast You Walk", 250, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
@@ -21,4 +28,8 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
 humanoid.JumpPower = JUMP_POWER
+end)
+
+Section:NewButton("F**k (bypassed)", "Lets you say f*ck", function()
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("fÚcҚ", "All")
 end)
