@@ -30,6 +30,6 @@ local humanoid = character:WaitForChild("Humanoid")
 humanoid.JumpPower = JUMP_POWER
 end)
 
-Section:NewButton("F**k (bypassed)", "Lets you say f*ck", function()
-game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("fÚcҚ", "All")
+MainSection:NewButton("N word with numbers", "N word using numbers", function()
+game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("n!gg3r", "All")
 end)
