@@ -1,50 +1,32 @@
+-- Load Kavo UI Library
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 
-local Window = Library.CreateLib("ShadowExecutor", "DarkTheme")
+-- Create UI Window
+local Window = Library.CreateLib("Shadow Hub V1.00", "Midnight")
 
-local Tab = Window:NewTab("Main")
+-- GLOBAL TAB
+local GlobalTab = Window:NewTab("🌐 Global")
+local GlobalSection = GlobalTab:NewSection("Player Tweaks")
 
-
-local MainSection = Tab:NewSection("Character")
-local Section = Tab:NewSection("ChatBypass")
-
-MainSection:NewButton("Infinite Jump", "Lets You Jump Infinitely", function()
-local InfiniteJumpEnabled = true
-game:GetService("UserInputService").JumpRequest:connect(function()
-	if InfiniteJumpEnabled then
-		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
-	end
-end)
-end)
-
-MainSection:NewSlider("WalkSpeed", "Changes How Fast You Walk", 250, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+-- WalkSpeed Slider
+GlobalSection:NewSlider("WalkSpeed", "Change your WalkSpeed", 100, 16, function(s)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
 end)
 
-MainSection:NewSlider("JumpPower", "Changes How High You Can Jump", 250, 15, function(s) -- 250 (MaxValue) | 0 (MinValue)
-local JUMP_POWER = s -- Change this to your desired JumpPower
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-
-humanoid.JumpPower = JUMP_POWER
+-- JumpPower Slider
+GlobalSection:NewSlider("JumpPower", "Change your JumpPower", 150, 50, function(j)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = j
 end)
 
-Section:NewButton("N word with numbers", "N word using numbers", function()
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+-- Infinite Jump Toggle
+getgenv().InfJump = false
+GlobalSection:NewToggle("Infinite Jump", "Toggle infinite jump on/off", function(state)
+    getgenv().InfJump = state
+end)
 
--- Check for chat event system
-local chatEvents = ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents")
-if chatEvents and chatEvents:FindFirstChild("SayMessageRequest") then
-    -- Send chat message
-    chatEvents.SayMessageRequest:FireServer("N!GG3R", "All")
-else
-    -- Fallback alert
-    game.StarterGui:SetCore("SendNotification", {
-        Title = "Error";
-        Text = "Game not supported for this button.";
-        Duration = 5;
-    })
-end
-
+-- Infinite Jump Logic
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if getgenv().InfJump then
+        game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+    end
 end)
